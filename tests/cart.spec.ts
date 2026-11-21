@@ -16,14 +16,19 @@ test('User can add product to cart', async ({ page }) => {
 });
 
 test('locked out user sees error', async ({ page }) => {
-  const lockedOutUsername = 'locked_out_user';
-  const password = 'secret_sauce';
+
+  const lockedUser = {
+    username: 'locked_out_user',
+    password : 'secret_sauce'
+  };
+  
   const errorMsg = 'Epic sadface: Sorry, this user has been locked out.';
   await page.goto('https://www.saucedemo.com/');
-  await page.locator('[data-test="username"]').fill(lockedOutUsername);
-  await page.locator('[data-test="password"]').fill(password);
+  await page.locator('[data-test="username"]').fill(lockedUser.username);
+  await page.locator('[data-test="password"]').fill(lockedUser.password);
   await page.locator('[data-test="login-button"]').click();
   
   await expect(page.locator('[data-test="error"]')).toHaveText(errorMsg);
+  await expect(page).toHaveURL('https://www.saucedemo.com/');
 });
 
