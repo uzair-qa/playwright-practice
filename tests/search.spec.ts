@@ -19,7 +19,7 @@ test.describe('Search', () => {
 
   test('search for hammer shows results', async ({ page }) => {
     await homePage.search('hammer');
-    await expect(page.getByText('Hammer')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Searched for: hammer' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Thor Hammer' })).toBeVisible();
   })
 
