@@ -1,9 +1,9 @@
 import { Locator, Page } from '@playwright/test'
 
 export class HomePage {
-    page: Page;
-    searchBox: Locator;
-    searchButton: Locator;
+    readonly page: Page;
+    readonly searchBox: Locator;
+    readonly searchButton: Locator;
 
 
     constructor(p: Page){
