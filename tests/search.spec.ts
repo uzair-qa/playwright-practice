@@ -1,25 +1,24 @@
 import { test, expect } from '../fixtures/pages';
+import { searchData } from '../data/products';
 
 test.describe('Search', () => {
-  //let homePage: HomePage;
-
   test.beforeEach(async ({ page, homePage }) => {
-    //homePage = new HomePage(page);
     await homePage.goto();
   });
 
-  test('Select combination pliers', async ({ page, homePage }) => {
-    await homePage.search('pliers');
+  test('Select combination pliers', {tag: '@smoke'}, async ({ page, homePage }) => {
+    await homePage.search(searchData.pliers.term);
     await expect(page.getByRole('heading', { name: 'Searched for: pliers' })).toBeVisible();
-    await page.getByRole('img', { name: 'Combination Pliers' }).click();
+    await page.getByRole('img', { name: `${searchData.pliers.product}` }).click();
 
-    await expect(page).toHaveTitle(/Combination Pliers/i);
-  })
+    await expect(page).toHaveTitle(new RegExp(searchData.pliers.product, 'i'));
+  });
 
-  test('search for hammer shows results', async ({ page, homePage }) => {
-    await homePage.search('hammer');
-    await expect(page.getByRole('heading', { name: 'Searched for: hammer' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Thor Hammer' })).toBeVisible();
-  })
-
+  for(const item of [searchData.pliers, searchData.hammer]){
+   test(`search for ${item.term} shows results`, async ({ page, homePage }) => {
+    await homePage.search(item.term);
+    await expect(page.getByRole('heading', { name: `Searched for: ${item.term}` })).toBeVisible();
+    await expect(page.getByRole('heading', { name: `${item.product}` })).toBeVisible();
+   });
+  }
 });

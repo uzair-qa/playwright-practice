@@ -1,6 +1,6 @@
 import { test, expect } from '../fixtures/pages';
 
-test('Add Thor Hammer to the cart, and the cart shows 1 item', async ({ page, homePage, productPage }) => {
+test('Add Thor Hammer to the cart, and the cart shows 1 item', {tag: '@smoke'}, async ({ page, homePage, productPage }) => {
     await homePage.goto();
     await homePage.search('Thor hammer');
     await expect(page.getByRole('heading', { name: 'Searched for: thor hammer' })).toBeVisible();
